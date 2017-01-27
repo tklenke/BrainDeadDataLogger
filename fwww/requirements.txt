@@ -1,0 +1,8 @@
+# List of python packages that my app needs
+
+#Production
+
+
+#Development
+
+
