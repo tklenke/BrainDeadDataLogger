@@ -21,12 +21,39 @@ source myprojectenv/bin/activate
 pip install gunicorn flask
 ```
 
-#clone git
+#create a fork and clone the github repository
+on github, create a fork for the new project (based on this one, duh) 
+then clone that new project into a new directory
 
+In the new project, goto clone with HTTPS section and copy the url 
+```
+git clone <url>
+```
 
-#run app.py with flask
+#run simpleapp.py with flask
 ```
 cd fwww
-export FLASK_APP=app.py
+export FLASK_APP=simpleapp.py
 flask run
+```
+
+#run simpleapp.py with gunicorn
+```
+gunicorn --bind 0.0.0.0:5000 wsgi:app
+```
+
+#install simpleapp as service
+```
+sudo cp /<path to>/simpleapp/server/simpleapp.service /etc/systemd/system/
+sudo systemctl start simpleapp
+sudo systemctl enable simpleapp
+sudo systemctl status simpleapp
+```
+
+#Configure NGinx
+```
+sudo cp /<path to>/simpleapp/server/simpleapp.nginx /etc/nginx/sites-available/simpleapp
+sudo ln -s /etc/nginx/sites-available/simpleapp /etc/nginx/sites-enabled
+sudo systemctl restart nginx
+sudo ufw allow 'Nginx Full'
 ```
