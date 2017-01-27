@@ -58,3 +58,13 @@ sudo ln -s /etc/nginx/sites-available/simpleapp /etc/nginx/sites-enabled
 sudo systemctl restart nginx
 sudo ufw allow 'Nginx Full'
 ```
+##Make a copy of this as a new project
+```
+mkdir newproj
+cd newproj
+git clone --bare https://github.com/tklenke/SimplyEmptyFlask.git
+cd SimplyEmptyFlask.git
+git push --mirror https://github.com/tklenke/new-repository.git
+cd ..
+rm -rf SimplyEmptyFlaskh.git
+```
