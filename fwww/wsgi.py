@@ -1,4 +1,4 @@
-from simpleapp import app
+from bdl import app
 
 if __name__ == "__main__":
     app.run()
