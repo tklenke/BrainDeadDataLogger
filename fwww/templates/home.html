@@ -4,5 +4,24 @@
     <h1>BrainDead Data Logger</h1>
     <p>Simple Webapp using Python, Flask and Skelton to log IoT data to 
        files on the Linux OS</p>
+       
+    <h4>Instructions for Posting Data</h4>
+    <h5>Step 1: Initialize Data File</h5>
+    <p>Post data with GET and use the following URL structure</p>
+    <pre><code>
+http://server_address/bdl/initstream/[stream name]?1=column_name&2=column_name...
+    </code></pre>
+    <strong>Stream Name</strong>
+    <p>Unique stream name comprised of following characters A-Za-z0-9_</p>
+    <h5>Step 2: Post Data</h5>
+    <p>Post data with GET and use the following URL structure</p>
+    <pre><code>
+http://server_address/bdl/log/[stream name]?[escaped data string]
+    </code></pre>
+    <strong>Stream Name</strong>
+    <p>Unique stream name comprised of following characters A-Za-z0-9_</p>
+    <strong>Escaped Data String</strong>
+    Key value pairs with key being unique digit denoting column to put data 
+    into, pair being data that will be placed in that column
   </div>
 {% endblock %}
