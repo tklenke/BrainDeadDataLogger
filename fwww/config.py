@@ -11,3 +11,6 @@ MAX_COLUMNS = 30
 
 #format for timestamps, change it if you like
 TIMESTAMP_FORMAT = "%d-%b-%Y %H:%M:%S"
+
+#default number of chart rows
+DEFAULT_CHART_ROWS = 100

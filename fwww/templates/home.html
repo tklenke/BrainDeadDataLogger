@@ -4,8 +4,13 @@
     <h1>BrainDead Data Logger</h1>
     <p>Simple Webapp using Python, Flask and Skelton to log IoT data to 
        files on the Linux OS</p>
-       
+    <ul>
+		<li><a href="#PostingInstructions">Instructions for Posting Data</a></li>
+		<li><a href="#ReadingInstructions">Instructions for Reading Data</a></li>
+    </ul>   
+    <a name="PostingInstructions"></a>   
     <h4>Instructions for Posting Data</h4>
+    
     <h5>Step 1: Initialize Data File</h5>
     <p>Post data with GET and use the following URL structure</p>
     <pre><code>
@@ -13,6 +18,10 @@ http://server_address/bdl/initstream/[stream name]?1=column_name&2=column_name..
     </code></pre>
     <strong>Stream Name</strong>
     <p>Unique stream name comprised of following characters A-Za-z0-9_</p>
+    <strong>Escaped Data String</strong>
+    <p>Key value pairs with key being unique digit denoting column to put data 
+    into, value being name of column</p>    
+    
     <h5>Step 2: Post Data</h5>
     <p>Post data with GET and use the following URL structure</p>
     <pre><code>
@@ -21,7 +30,39 @@ http://server_address/bdl/log/[stream name]?[escaped data string]
     <strong>Stream Name</strong>
     <p>Unique stream name comprised of following characters A-Za-z0-9_</p>
     <strong>Escaped Data String</strong>
-    Key value pairs with key being unique digit denoting column to put data 
-    into, pair being data that will be placed in that column
+    <p>Key value pairs with key being unique digit denoting column to put data 
+    into, value being data that will be placed in that column</p>
+    
+     <a name="ReadingInstructions"></a>   
+    <h4>Instructions for Reading Data</h4>
+    
+    <h5>Option 1: Return Raw CSV File</h5>
+    <p>Fetch Raw CSV File by using following URL structure</p>
+    <pre><code>
+http://server_address/bdl/csv/[stream name]
+    </code></pre>
+    <strong>Stream Name</strong>
+    <p>Your previously initialized data stream name</p>
+
+
+    <h5>Option 2: Return Web page with Table</h5>
+    <p>Get Data as Web Page by using following URL structure</p>
+    <pre><code>
+http://server_address/bdl/table/[stream name](?options)
+    </code></pre>
+    <strong>Stream Name</strong>
+    <p>Your previously initialized data stream name</p>
+    <strong>?options</strong>
+    <p>question mark and options may be omitted</p>
+<pre>
+Default: Submitting just the stream name, 
+	without the query string (?), will return the currently active file
+nrows=[integer n]: Will limit to the first n lines of the current file
+</pre>
+
+    <h5>Option 3: Return Web page with Chart using Pygal</h5>
+    <pre><code>
+http://server_address/bdl/chart/[stream name](?options)
+    </code></pre>
   </div>
 {% endblock %}

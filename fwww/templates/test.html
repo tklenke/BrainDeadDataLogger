@@ -1,8 +1,2 @@
 {% extends "layout.html" %}
-{% block content %}
-  <div class="test">
-    <p>Stream name is {{stream_name}}</p>
-    <p>columns:{{hrow}}</p>
-    <p>file name:{{fname}}</p>
-  </div>
-{% endblock %}
+{% block content %} {{chart|safe}} {% endblock %}

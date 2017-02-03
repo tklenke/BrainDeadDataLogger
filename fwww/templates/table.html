@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="table">
+	<table>
+		{% for row in reader %}
+
+		<tr>
+			{% for cell in row %}
+			<td>{{cell}}</td>
+			{% endfor %}
+		</tr>
+		{% if nrows and loop.index is greaterthan nrows %}
+			{% break %}
+		{% endif %}
+		{% endfor %}
+		
+	</table>
+  </div>
+{% endblock %}
