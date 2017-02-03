@@ -21,6 +21,8 @@ def home():
     
 @app.route("/initstream/<stream_name>")
 def initialize_stream(stream_name):
+	if invalid_key():
+		return ("0 invalid key".format(stream_name))
 	if invalid_stream_name(stream_name):
 		return ("0 invalid stream name:{}".format(stream_name))
 		
@@ -29,6 +31,8 @@ def initialize_stream(stream_name):
 	hrow = '"timestamp"'
 	numcols = 0
 	for c in cols:
+		if request.args[str(c)] == '0':
+			continue
 		hrow += ',"' + request.args[c].replace('"','""') + '"'
 		numcols +=1
 		
@@ -56,6 +60,8 @@ def initialize_stream(stream_name):
 
 @app.route("/log/<stream_name>")
 def log_stream(stream_name):
+	if invalid_key():
+		return ("0 invalid key".format(stream_name))
 	if invalid_stream_name(stream_name):
 		return ("0 invalid stream name:{}".format(stream_name))
 	#check to see if the file exists
@@ -76,6 +82,9 @@ def log_stream(stream_name):
 	row = '"{}",'.format(time.strftime(app.config['TIMESTAMP_FORMAT']))
 	for c in range(1,maxcol+1):
 		if 	request.args.get(str(c),None) != None:  #count number of entries with data
+			#skip the key column
+			if request.args[str(c)] == '0':
+				continue
 			numdata += 1
 			#put non-numeric data in quotes
 			r = re.compile('^-?(0|[1-9]\d*)(\.\d+)?$')
@@ -164,10 +173,13 @@ def read_stream_as_chart(stream_name):
 	for row in readr:
 		nrows += 1
 		for idx, cell in enumerate(row):
-			if idx == 0:
-				data[idx].append(tonum(cell))
-			else:
-				data[idx].append(tonum(cell))
+			try:
+				if idx == 0:
+					data[idx].append(tonum(cell))
+				else:
+					data[idx].append(tonum(cell))
+			except:
+				render_template('error.html', msg="Error reading data. <br>Consider reinitializing if you changed the machine that is posting log data" )
 				
 	#set up the chart
 	bar_chart = pygal.DateTimeLine(x_label_rotation=65)
@@ -183,9 +195,12 @@ def read_stream_as_chart(stream_name):
 			cd[i].append((data[0][j],data[i][j]))
 		bar_chart.add(cd[i].pop(0),cd[i])
 
-	
-	chart = bar_chart.render(is_unicode=True)
-	return render_template('test.html', chart=chart )	
+	try:
+		chart = bar_chart.render(is_unicode=True)
+	except:
+		render_template('error.html', msg="Error rendering chart. <br>Consider reinitializing if you changed the machine that is posting log data" )
+
+	return render_template('chart.html', chart=chart )	
 	
 def invalid_stream_name(name):
 	#validate stream name (alpha numeric only)
@@ -194,6 +209,12 @@ def invalid_stream_name(name):
 		return (True)  #true: it is invalid
 	else:
 		return (False)
+		
+def invalid_key():
+	key = request.args.get('0')
+	if key == None or key != app.config['UPDATE_KEY']:
+		return True
+	return False
 		
 def tonum(s):
 	try:
