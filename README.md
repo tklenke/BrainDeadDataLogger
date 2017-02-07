@@ -7,9 +7,9 @@ See notes in SimplyEmptyFlask for notes on how to clone and install this
 app.  It's the same with exceptions below.
 
 ###Install Dependencies
-'''
+```
 pip install pygal
-'''
+```
 
 Yes, I know I could just use Adafruit.io or data.Sparkfun.com to post IoT data to a website.  And yes there are other cool websites that have way more functionality than this.  But, I don't own those sites and I can't add features, write server scripts to email me the data files or yada yada.
 
