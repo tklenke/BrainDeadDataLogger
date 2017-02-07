@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve BrainDeadDataLogger
+After=network.target
+
+[Service]
+User=sammy
+Group=www-data
+WorkingDirectory=/<path to>/BrainDeadDataLogger/fwww
+Environment="PATH=/<path to>/BrainDeadDataLogger/bdlenv/bin"
+ExecStart=/<path to>/BrainDeadDataLogger/bdlenv/bin/gunicorn --workers 3 --bind unix:bdl.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
