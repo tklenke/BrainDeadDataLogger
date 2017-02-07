@@ -190,10 +190,14 @@ def read_stream_as_chart(stream_name):
 	cd = [[] for x in range(numcols)]
 	for i in range(1,numcols):
 		#put in the description
-		cd[i].append(data[i][0] ) 
-		for j in range(1,nrows+1):
-			cd[i].append((data[0][j],data[i][j]))
-		bar_chart.add(cd[i].pop(0),cd[i])
+		try:
+			cd[i].append(data[i][0] ) 
+			for j in range(1,nrows+1):
+				cd[i].append((data[0][j],data[i][j]))
+			bar_chart.add(cd[i].pop(0),cd[i])
+		except:
+			render_template('error.html', msg="Error transforming data. <br>Consider reinitializing if you changed the machine that is posting log data" )
+
 
 	try:
 		chart = bar_chart.render(is_unicode=True)
