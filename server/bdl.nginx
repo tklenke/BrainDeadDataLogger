@@ -4,6 +4,6 @@ server {
 
     location / {
         include proxy_params;
-        proxy_pass http://unix:/<path_to>/BrainDeadDataLogger>/bdl.sock;
+        proxy_pass http://unix:/<path_to>/BrainDeadDataLogger/bdl.sock;
     }
 }

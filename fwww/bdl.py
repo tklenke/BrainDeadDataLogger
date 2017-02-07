@@ -31,7 +31,8 @@ def initialize_stream(stream_name):
 	hrow = '"timestamp"'
 	numcols = 0
 	for c in cols:
-		if request.args[str(c)] == '0':
+		#skip the key column, we don't want to record that
+		if c == '0':
 			continue
 		hrow += ',"' + request.args[c].replace('"','""') + '"'
 		numcols +=1
@@ -83,7 +84,7 @@ def log_stream(stream_name):
 	for c in range(1,maxcol+1):
 		if 	request.args.get(str(c),None) != None:  #count number of entries with data
 			#skip the key column
-			if request.args[str(c)] == '0':
+			if c == '0':
 				continue
 			numdata += 1
 			#put non-numeric data in quotes

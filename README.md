@@ -11,6 +11,16 @@ app.  It's the same with exceptions below.
 pip install pygal
 ```
 
+###Change config.py
+* replace UPDATE_KEY with your key string
+* replace PATH_TO_DATA with your data directory
+
+###Update changes from repository
+```
+git pull origin master
+sudo systemctl restart bdl.service
+```
+
 Yes, I know I could just use Adafruit.io or data.Sparkfun.com to post IoT data to a website.  And yes there are other cool websites that have way more functionality than this.  But, I don't own those sites and I can't add features, write server scripts to email me the data files or yada yada.
 
 I've done some Rails development, and it...well...it's brittle.  And I wanted something even simpler.  Python seems to be the rage (at least for my kids who are learning Python in their school); Google uses Python (or did...I guess they now do whatever the AI tells them to do); I like Pandas, so hey Python.
