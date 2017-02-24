@@ -156,17 +156,13 @@ def read_stream_as_chart(stream_name):
 	#set up array of columns using the header row and the first row
 	data=[[] for x in range(numcols)]
 	for idx, cell in enumerate(frow):
-		out += str(idx) + ":" + str(cell) 
 		#handle the header row
-		if idx < len(hrow):
-			data[idx].append(hrow[idx])
-			out += ":" + hrow[idx]
+		if idx <= len(hrow):
+			data[idx].append(hrow[idx-1])
 		else:
 			data[idx].append('blank')
-			out += ":blank"
 		#handle the cell
 		data[idx].append(tonum(cell))
-		out += "<br>"
 		
 	nrows = 1
 		
@@ -198,7 +194,6 @@ def read_stream_as_chart(stream_name):
 			bar_chart.add(cd[i].pop(0),cd[i])
 		except:
 			render_template('error.html', msg="Error transforming data. <br>Consider reinitializing if you changed the machine that is posting log data" )
-
 
 	try:
 		chart = bar_chart.render(is_unicode=True)
