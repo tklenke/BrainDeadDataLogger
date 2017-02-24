@@ -1,3 +1,4 @@
 bdlenv/*
 fwww/__pycache__/*
 data/*
+fwww/config.py
